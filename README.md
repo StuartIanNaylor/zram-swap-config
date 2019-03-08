@@ -22,7 +22,6 @@ _____
     cd ..
     rm -r zram-swap-config
 
-**REBOOT** before installing anything else (for example apache2)
 ## Upgrade
 
 You need to stop zram-swap-config (`service log2ram stop`) and start the [install](#install).
