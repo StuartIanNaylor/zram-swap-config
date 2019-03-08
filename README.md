@@ -46,7 +46,7 @@ If you check my repo there will also be a simple dynamic load based SWAPPINESS g
 
 
 ### It is working?
-You can now check the mount folder in ram with (You will see lines with log2ram if working)
+You can now check the mount folder in ram with (You will see lines with Zram-swap-config if working)
 ```
 # zramctl
 …
