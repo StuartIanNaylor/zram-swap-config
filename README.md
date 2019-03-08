@@ -94,7 +94,7 @@ stress: info: [861] successful run completed in 60s
 |snappy 1.1.4	         | 2.091	| 530 MB/s	  | 1800 MB/s   |
 |lzf 3.6 -1	             | 2.077	| 400 MB/s	  | 860 MB/s    |
 
-You may wish to ininstall raspbian file swap services
+You may wish to uninstall raspbian file swap services
 ```
 sudo apt-get remove dphys-swapfile
 or
