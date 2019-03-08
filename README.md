@@ -67,7 +67,14 @@ NAME       TYPE        SIZE USED PRIO
               total        used        free      shared  buff/cache   available
 Mem:            433          31         329           3          72         351
 Swap:           555           0         555
-
+…
+# cat /proc/sys/vm/swappiness
+…
+80
+…
+# c cat /proc/sys/vm/page-cluster
+…
+0
 ```
 ###### Now, muffins for everyone!
 
