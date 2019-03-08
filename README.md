@@ -24,7 +24,7 @@ _____
 
 ## Upgrade
 
-You need to stop zram-swap-config (`service log2ram stop`) and start the [install](#install).
+You need to stop zram-swap-config (`service Zram-swap-config stop`) and start the [install](#install).
 
 ## Customize
 #### variables :
