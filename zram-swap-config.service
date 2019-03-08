@@ -3,7 +3,7 @@ Description=zram-swap-config
 DefaultDependencies=no
 Before=basic.target sysinit.target shutdown.target
 After=local-fs.target
-Conflicts=shutdown.target reboot.target halt.target
+Conflicts=shutdown.target reboot.target halt.target log2ram.target
 IgnoreOnIsolate=yes
 
 [Service]
