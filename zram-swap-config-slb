@@ -1,0 +1,48 @@
+#!/bin/bash
+echo $$ > zram-swap-config-slb-pid
+
+check_load() {
+
+        current_load=$(cat /proc/loadavg | awk '{print $1}')
+        case ${current_load%%.*} in
+                0)
+                LOW_LOAD=$((LOW_LOAD +1))
+                ;;
+                1)
+                SWAPPINESS=80
+                ;;
+                *)
+                SWAPPINESS=70
+                ;;
+        esac
+}
+SWAPPINESS=80
+LAST_SWAPPINESS=80
+while :
+do
+	LOW_LOAD=0
+	COUNTER=0
+	while [  $COUNTER -lt 10 ]; do
+		sleep 2
+		check_load
+		if [ "$LAST_SWAPPINESS" -ne "$SWAPPINESS" ]; then
+			sysctl vm.swappiness=${SWAPPINESS} > /dev/null 2>&1
+			echo ${SWAPPINESS}
+			LAST_SWAPPINESS=${SWAPPINESS}
+		fi
+		COUNTER=$(( COUNTER + 1 ))
+	done
+
+	if [ "$LOW_LOAD" -eq 10 ]; then
+		SWAPPINESS=$(( SWAPPINESS + 5 ))
+	fi
+	if [ "$SWAPPINESS" -gt 100 ]; then
+		SWAPPINESS=100
+	fi
+	if [ "$LAST_SWAPPINESS" -ne "$SWAPPINESS" ]; then
+		sysctl vm.swappiness=${SWAPPINESS} > /dev/null 2>&1
+		echo ${SWAPPINESS}
+		LAST_SWAPPINESS=${SWAPPINESS}
+	fi
+
+done

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo $$
+sh zram-swap-config-slb &
+

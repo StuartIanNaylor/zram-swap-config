@@ -44,8 +44,10 @@ createZramSwaps () {
 case "$1" in
 	start)
 		createZramSwaps
+		sh /usr/local/bin/zram-swap-config-slb &
 		;;
 	stop)
+		kill $(cat /usr/local/bin/zram-swap-config-slb-pid)
 		if DEVICES=$(grep zram /proc/swaps | awk '{print $1}'); then
 			for i in $DEVICES; do
 				swapoff $i
