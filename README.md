@@ -5,6 +5,7 @@ zram-config-0.5 is a broken package that for many reasons should not be used.
 Zram-swap-config is an interim package until zram-config-0.5 is fixed in deploy and operation
 
 Usefull for **RaspberryPi** for not writing on the SD card all the time. You need it because your SD card doesn't want to suffer anymore!
+Perfect accomplement for Log2Ram which will also write logs to memory https://github.com/azlux/log2ram
 
 _____
 ## Menu
