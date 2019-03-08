@@ -25,7 +25,7 @@ _____
 
 ## Upgrade
 
-You need to stop zram-swap-config (`service Zram-swap-config stop`) and start the [install](#install).
+You need to stop zram-swap-config (`service zram-swap-config stop`) and start the [install](#install).
 
 ## Customize
 #### variables :
@@ -95,5 +95,5 @@ Swap:           555           0         555
 ## Uninstall :(
 (Because sometime we need it)
 ```
-chmod +x /usr/local/bin/uninstall-log2ram.sh && sudo /usr/local/bin/uninstall-log2ram.sh
+chmod +x /usr/local/bin/zram-swap-config-uninstall.sh && sudo /usr/local/bin/zram-swap-config-uninstall.sh
 ```
