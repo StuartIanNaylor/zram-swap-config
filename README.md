@@ -31,14 +31,14 @@ You need to stop zram-swap-config (`service log2ram stop`) and start the [instal
 #### variables :
 In the file `/etc/zram-swap-config.conf`:
 
-MEM_FACTOR = Percentage of available ram to allocate to all zram swap devices which is divided equally by swap_devices number
-DRIVE_FACTOR = Virtual uncompressed zram drive size estimate approx alg compression ratio 
-COMP_ALG lz4 is faster than lzo but some distro's show compile and operation difference and in use lzo depending on binary may be faster
-SWAP_DEVICES = number of indivial drives sharing memeory provided by MEM_FACTOR each device support multiple streams 1 large drive is generally better
-SWAP_PRI = swap_priority for each drive 75 is a hig order preference and should be well above other swap drives
-PAGE_CLUSTER default page cluster is 3 which caches fetches in batches of 8 and helps with HDD paging, with zram mem 0 forces single page fetches
+- MEM_FACTOR = Percentage of available ram to allocate to all zram swap devices which is divided equally by swap_devices number
+- DRIVE_FACTOR = Virtual uncompressed zram drive size estimate approx alg compression ratio 
+- COMP_ALG lz4 is faster than lzo but some distro's show compile and operation difference and in use lzo depending on binary may be faster
+- SWAP_DEVICES = number of indivial drives sharing memeory provided by MEM_FACTOR each device support multiple streams 1 large drive is generally better
+- SWAP_PRI = swap_priority for each drive 75 is a hig order preference and should be well above other swap drives
+- PAGE_CLUSTER default page cluster is 3 which caches fetches in batches of 8 and helps with HDD paging, with zram mem 0 forces single page fetches
 This can help reduce latency and increase performance
-SWAPPINESS default swappiness is 60 but with increased performance of zram swap 80 garners overall performance gain without excessive load
+- SWAPPINESS default swappiness is 60 but with increased performance of zram swap 80 garners overall performance gain without excessive load
 Because zram uses compression load is created and even if minimal at intense load periods such as boot any extra load is unwanted
 Unfortunately there is no dynamic load balancing of swappiness as with zram in general operation SWAPINESS=100 will garner performance benefit
 If the overall load is reasonable at high load it will cause load to accumulate. 
