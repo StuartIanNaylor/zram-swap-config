@@ -1,13 +1,10 @@
-# Log2Ram
-Like ramlog for systemd (on debian 8 jessie for example).
+# Zram-swap-config
+Like zram-config-0.5
+
+zram-config-0.5 is a broken package that for many reasons should not be used.
+Zram-swap-config is an interim package until zram-config-0.5 is fixed in deploy and operation
 
 Usefull for **RaspberryPi** for not writing on the SD card all the time. You need it because your SD card doesn't want to suffer anymore!
-
-Explanations: The script creates a `/var/log` mount point in RAM. So any writing of the log to the `/var/log` folder will not actually be written to disk (in this case to the sd card for a raspberry card) but directly to RAM. By default, every hour, the CRON will launch a synchronization of the RAM to the folder located on the physical disk. The script will also make this copy of RAM to disk in case of machine shutdown (but cannot do it in case of power failure). This way you avoid excessive writing on the SD card.
-
-The script [log2ram](https://github.com/azlux/log2ram) can work on every linux system. So you can use it with your own daemon manager if you don't have systemd.
-
-Log2Ram is based on transient log for Systemd here : [A transient /var/log](https://www.debian-administration.org/article/661/A_transient_/var/log)
 
 _____
 ## Menu
@@ -19,47 +16,59 @@ _____
 
 ## Install
 
-    curl -Lo log2ram.tar.gz https://github.com/azlux/log2ram/archive/master.tar.gz
-    tar xf log2ram.tar.gz
-    cd log2ram-master
+    git clone https://github.com/StuartIanNaylor/zram-swap-config
+    cd zram-swap-config
     chmod +x install.sh && sudo ./install.sh
     cd ..
-    rm -r log2ram-master
+    rm -r zram-swap-config
 
 **REBOOT** before installing anything else (for example apache2)
 ## Upgrade
 
-You need to stop log2ram (`service log2ram stop`) and start the [install](#install).
+You need to stop zram-swap-config (`service log2ram stop`) and start the [install](#install).
 
 ## Customize
 #### variables :
-In the file `/etc/log2ram.conf`, there are three variables:
+In the file `/etc/zram-swap-config.conf`:
 
-- `SIZE`: defines the size the log folder will reserve into the RAM (default is 40M).
-- `USE_RSYNC`: Can be set to `true` if you prefer ´rsync´ rather than ´cp´. I use the command `cp -u` and `rsync -X`, I don't copy the all folder every time for optimization.
-- `MAIL`: Disables the error system mail if there is not enough place on RAM (if set to `false`)
+MEM_FACTOR = Percentage of available ram to allocate to all zram swap devices which is divided equally by swap_devices number
+DRIVE_FACTOR = Virtual uncompressed zram drive size estimate approx alg compression ratio 
+COMP_ALG lz4 is faster than lzo but some distro's show compile and operation difference and in use lzo depending on binary may be faster
+SWAP_DEVICES = number of indivial drives sharing memeory provided by MEM_FACTOR each device support multiple streams 1 large drive is generally better
+SWAP_PRI = swap_priority for each drive 75 is a hig order preference and should be well above other swap drives
+PAGE_CLUSTER default page cluster is 3 which caches fetches in batches of 8 and helps with HDD paging, with zram mem 0 forces single page fetches
+This can help reduce latency and increase performance
+SWAPPINESS default swappiness is 60 but with increased performance of zram swap 80 garners overall performance gain without excessive load
+Because zram uses compression load is created and even if minimal at intense load periods such as boot any extra load is unwanted
+Unfortunately there is no dynamic load balancing of swappiness as with zram in general operation SWAPINESS=100 will garner performance benefit
+If the overall load is reasonable at high load it will cause load to accumulate. 
+If you check my repo there will also be a simple dynamic load based SWAPPINESS governor that will get of the hurdle of a static compromise on swappiness
 
-#### refresh time:
-By default Log2Ram writes to the HardDisk every hour. If you think this is too much, you can make the write every day by moving the cron file to daily: `sudo mv /etc/cron.hourly/log2ram /etc/cron.daily/log2ram`.
 
 ### It is working?
 You can now check the mount folder in ram with (You will see lines with log2ram if working)
 ```
-# df -h
+# zramctl
 …
-log2ram          40M  532K   40M   2% /var/log
+NAME       ALGORITHM DISKSIZE  DATA  COMPR TOTAL STREAMS MOUNTPOINT
+/dev/zram0 lz4         455.1M    4K    65B    4K       1 [SWAP]
+/dev/zram1               140M 17.7M 432.4K  680K       1 /var/log
 …
 
-# mount
+# swapon
 …
-log2ram on /var/log type tmpfs (rw,nosuid,nodev,noexec,relatime,size=40960k,mode=755)
+NAME       TYPE        SIZE USED PRIO
+/dev/zram0 partition 455.1M   0B   75
+/var/swap  file        100M   0B   -2
 …
+…
+# free -m
+…
+              total        used        free      shared  buff/cache   available
+Mem:            433          31         329           3          72         351
+Swap:           555           0         555
+
 ```
-
-If you have issue with apache2, you can try to add `apache2.service` next to other services on the `Before` parameter in `/etc/systemd/system/log2ram.service` it will solve the pb
-
-The log for log2ram will be written at: `/var/log/log2ram.log`
-
 ###### Now, muffins for everyone!
 
 
