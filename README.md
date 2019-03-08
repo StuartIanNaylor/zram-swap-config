@@ -76,7 +76,7 @@ Swap:           555           0         555
 0
 …
 # sudo apt-get install stress
-# sudo stress --vm 3 --vm-bytes 256M --timeout 60s
+# stress --vm 3 --vm-bytes 256M --timeout 60s
 …
 stress: info: [861] dispatching hogs: 0 cpu, 0 io, 3 vm, 0 hdd
 stress: info: [861] successful run completed in 60s
