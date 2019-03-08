@@ -35,7 +35,7 @@ In the file `/etc/zram-swap-config.conf`:
 - DRIVE_FACTOR = Virtual uncompressed zram drive size estimate approx alg compression ratio 
 - COMP_ALG lz4 is faster than lzo but some distro's show compile and operation difference and in use lzo depending on binary may be faster
 - SWAP_DEVICES = number of indivial drives sharing memeory provided by MEM_FACTOR each device support multiple streams 1 large drive is generally better
-- SWAP_PRI = swap_priority for each drive 75 is a hig order preference and should be well above other swap drives
+- SWAP_PRI = swap_priority for each drive 75 is a high order preference and should be well above other swap drives
 - PAGE_CLUSTER default page cluster is 3 which caches fetches in batches of 8 and helps with HDD paging, with zram mem 0 forces single page fetches
 This can help reduce latency and increase performance
 - SWAPPINESS default swappiness is 60 but with increased performance of zram swap 80 garners overall performance gain without excessive load
