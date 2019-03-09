@@ -1,10 +1,9 @@
 [Unit]
 Description=zram-swap-config
 DefaultDependencies=no
-Before=basic.target sysinit.target shutdown.target
+Before=basic.target sysinit.target shutdown.target log2ram.target
 After=local-fs.target
-Conflicts=shutdown.target reboot.target halt.target log2ram.target
-IgnoreOnIsolate=yes
+Conflicts=shutdown.target reboot.target halt.target
 
 [Service]
 Type=oneshot
