@@ -14,4 +14,5 @@ install -m 644 uninstall.sh /usr/local/bin/zram-swap-config-uninstall.sh
 systemctl enable zram-swap-config
 
 
-echo "##### Reboot to activate zram-swap-config #####"
+echo "#####     Reboot to activate zram-swap-config     #####"
+echo "##### edit /etc/zram-swap-config.conf for options #####"

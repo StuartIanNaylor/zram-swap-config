@@ -1,16 +1,14 @@
 [Unit]
 Description=zram-swap-config
 DefaultDependencies=no
-Before=basic.target sysinit.target shutdown.target log2ram.target
-After=local-fs.target
-Conflicts=shutdown.target reboot.target halt.target
+After=local-fs.target log2ram.target basic.target rsyslog.service syslog.target systemd-journald.service sysinit.target shutdown.target
 
 [Service]
 Type=oneshot
 ExecStart= /usr/local/bin/zram-swap-config start
 ExecStop= /usr/local/bin/zram-swap-config stop
 TimeoutStartSec=120
-RemainAfterExit=yes
+
 
 [Install]
 WantedBy=sysinit.target

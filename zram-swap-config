@@ -43,7 +43,8 @@ createZramSwaps () {
 
 case "$1" in
 	start)
-		createZramSwaps
+		sleep .1
+		createZramSwaps		
 		nohup /usr/local/bin/zram-swap-config-slb > /dev/null 2>&1 &
 		;;
 	stop)
