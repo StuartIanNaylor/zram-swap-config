@@ -1,5 +1,5 @@
 #!/bin/bash
-echo $$ > zram-swap-config-slb-pid
+echo $$ > /usr/local/bin/zram-swap-config-slb-pid
 
 check_load() {
 
