@@ -7,7 +7,7 @@ createZramSwaps () {
 	mem=$((( totalmem * MEM_FACTOR / 100 / SWAP_DEVICES ) * 1024 ))
 	drive_size=$((( mem * DRIVE_FACTOR ) /100 ))
 	# Check Zram Class created
-	if [ ! -d '/sys/class/zram-control' ]; then
+	if [ ! -d "/sys/class/zram-control" ]; then
         	modprobe zram
         	RAM_DEV='0'
 		echo ${COMP_ALG} > /sys/block/zram${RAM_DEV}/comp_algorithm
@@ -44,7 +44,7 @@ createZramSwaps () {
 case "$1" in
 	start)
 		createZramSwaps
-		sh /usr/local/bin/zram-swap-config-slb &
+		nohup /usr/local/bin/zram-swap-config-slb > /dev/null 2>&1 &
 		;;
 	stop)
 		kill $(cat /usr/local/bin/zram-swap-config-slb-pid)
