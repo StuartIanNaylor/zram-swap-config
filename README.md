@@ -25,7 +25,7 @@ _____
 
 ## Upgrade
 
-Run zram-swap-config-uninstall.sh from /usr/local/bin/ and start then start the new install [install](#install).
+Run zram-swap-config-uninstall.sh from /usr/local/bin/ and start then start the new [install](#install).
 
 ## Customize
 #### variables :
