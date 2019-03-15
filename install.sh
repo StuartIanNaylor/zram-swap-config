@@ -7,8 +7,8 @@ systemctl -q is-active zram-swap-config  && { echo "ERROR: zram-swap-config serv
 mkdir -p /usr/local/bin/
 install -m 644 zram-swap-config.service /etc/systemd/system/zram-swap-config.service
 install -m 755 zram-swap-config /usr/local/bin/zram-swap-config
-install -m 755 zram-swap-config-slb /usr/local/bin/zram-swap-config-slb
-install -m 644 zram-swap-config-slb-pid /usr/local/bin/zram-swap-config-slb-pid
+#install -m 755 zram-swap-config-slb /usr/local/bin/zram-swap-config-slb
+#install -m 644 zram-swap-config-slb-pid /usr/local/bin/zram-swap-config-slb-pid
 install -m 644 zram-swap-config.conf /etc/zram-swap-config.conf
 install -m 644 uninstall.sh /usr/local/bin/zram-swap-config-uninstall.sh
 systemctl enable zram-swap-config
