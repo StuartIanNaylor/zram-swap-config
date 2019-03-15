@@ -101,11 +101,10 @@ or
 disable
 sudo systemctl disable dphys-swapfile
 ```
-###### Now, muffins for everyone!
 
 
-## Uninstall :(
-(Because sometime we need it)
+## Uninstall 
+
 ```
 chmod +x /usr/local/bin/zram-swap-config-uninstall.sh && sudo /usr/local/bin/zram-swap-config-uninstall.sh
 ```
