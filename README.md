@@ -81,7 +81,8 @@ Swap:           555           0         555
 stress: info: [861] dispatching hogs: 0 cpu, 0 io, 3 vm, 0 hdd
 stress: info: [861] successful run completed in 60s
 ```
-
+Any comp alg can be used for zram, zramctl unfortunately only has the text strings for lzo/lz4 so blank space is displayed.
+zstd kernel inclusion seems to have some politics attached.
 
 | Compressor name	     | Ratio	| Compression | Decompress. |
 |------------------------|----------|-------------|-------------|
