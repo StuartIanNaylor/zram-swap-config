@@ -83,6 +83,7 @@ stress: info: [861] successful run completed in 60s
 ```
 Any comp alg can be used for zram, zramctl unfortunately only has the text strings for lzo/lz4 so blank space is displayed.
 zstd kernel inclusion seems to have some politics attached.
+Check /proc/crypto for available.
 
 | Compressor name	     | Ratio	| Compression | Decompress. |
 |------------------------|----------|-------------|-------------|
