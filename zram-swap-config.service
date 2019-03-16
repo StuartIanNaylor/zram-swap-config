@@ -2,6 +2,7 @@
 Description=zram-swap-config
 DefaultDependencies=no
 After=local-fs.target
+Conflicts=log2zram.target log2ram.target
 
 [Service]
 Type=oneshot
