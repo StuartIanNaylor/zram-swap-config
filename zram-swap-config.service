@@ -1,8 +1,7 @@
 [Unit]
 Description=zram-swap-config
 DefaultDependencies=no
-After=local-fs.target
-Conflicts=log2zram.target log2ram.target
+After=local-fs.target log2zram.service log2ram.service
 
 [Service]
 Type=oneshot
