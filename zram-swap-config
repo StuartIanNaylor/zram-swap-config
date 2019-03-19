@@ -8,20 +8,20 @@ createZramSwaps () {
 	drive_size=$((( mem * DRIVE_FACTOR ) /100 ))
 	# Check Zram Class created
 	if [ ! -d "/sys/class/zram-control" ]; then
-        	modprobe zram
+        	modprobe --verbose zram
         	RAM_DEV='0'
 		echo ${COMP_ALG} > /sys/block/zram${RAM_DEV}/comp_algorithm
 		echo ${drive_size} > /sys/block/zram${RAM_DEV}/disksize
 		echo ${mem} > /sys/block/zram${RAM_DEV}/mem_limit
 		mkswap /dev/zram${RAM_DEV}
-		swapon -p ${SWAP_PRI} /dev/zram${RAM_DEV}
+		swapon -v -p ${SWAP_PRI} /dev/zram${RAM_DEV}
 	else
         	RAM_DEV=$(cat /sys/class/zram-control/hot_add)
 		echo ${COMP_ALG} > /sys/block/zram${RAM_DEV}/comp_algorithm
 		echo ${drive_size} > /sys/block/zram${RAM_DEV}/disksize
 		echo ${mem} > /sys/block/zram${RAM_DEV}/mem_limit
 		mkswap /dev/zram${RAM_DEV}
-		swapon -p ${SWAP_PRI} /dev/zram${RAM_DEV}
+		swapon -v -p ${SWAP_PRI} /dev/zram${RAM_DEV}
 	fi
 
 	if [ "$SWAP_DEVICES" -gt 1 ];then
@@ -31,7 +31,7 @@ createZramSwaps () {
 			echo ${drive_size} > /sys/block/zram${RAM_DEV}/disksize
 			echo ${mem} > /sys/block/zram${RAM_DEV}/mem_limit
 			mkswap /dev/zram${RAM_DEV}
-			swapon -p ${SWAP_PRI} /dev/zram${RAM_DEV}
+			swapon -v -p ${SWAP_PRI} /dev/zram${RAM_DEV}
 		done
 	fi
 	
