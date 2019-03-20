@@ -4,7 +4,8 @@ Like zram-config-0.5
 zram-config-0.5 is a broken package that for many reasons should not be used.
 Zram-swap-config is an interim package until zram-config-0.5 is fixed in deploy and operation
 
-Usefull for IoT / maker projects for reducing SD, Nand and Emmc block wear via write operations. 
+Usefull for IoT / maker projects for reducing SD, Nand and Emmc block wear via write operations.
+Check the Swapiness-load-balancer branch for dynamic swappiness control.
 
 
 _____
