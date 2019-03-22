@@ -6,6 +6,7 @@ Zram-swap-config is an interim package until zram-config-0.5 is fixed in deploy 
 
 Usefull for IoT / maker projects for reducing SD, Nand and Emmc block wear via write operations.
 Check the Swapiness-load-balancer branch for dynamic swappiness control.
+Works well in conjunction with https://github.com/StuartIanNaylor/zramdrive and https://github.com/StuartIanNaylor/log2zram
 
 
 _____
