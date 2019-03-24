@@ -18,7 +18,7 @@ _____
 5. [Uninstall](#uninstall-)
 
 ## Install
-
+    apt-get install git
     git clone https://github.com/StuartIanNaylor/zram-swap-config
     cd zram-swap-config
     chmod +x install.sh && sudo ./install.sh
