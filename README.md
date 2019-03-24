@@ -45,7 +45,30 @@ Because zram uses compression load is created and even if minimal at intense loa
 Unfortunately there is no dynamic load balancing of swappiness as with zram in general operation SWAPINESS=100 will garner performance benefit
 If the overall load is reasonable at high load it will cause load to accumulate. 
 If you check my repo there will also be a simple dynamic load based SWAPPINESS governor that will get of the hurdle of a static compromise on swappiness
+```
+# Configuration file for zram-swap-config (https://github.com/StuartIanNaylor/zram-swap-config) under GNU General Public License v3.0 license.
+# This configuration file is read by the zram-swap-config service
 
+# MEM_FACTOR = Percentage of available ram to allocate to all zram swap devices which is divided equally by swap_devices number
+MEM_FACTOR=50
+# DRIVE_FACTOR = Virtual uncompressed zram drive size estimate approx alg compression ratio 
+DRIVE_FACTOR=210
+# COMP_ALG lz4 is faster than lzo but some distro's show compile and operation difference and in use lzo depending on binary may be faster
+COMP_ALG=lz4
+# SWAP_DEVICES = number of indivial drives sharing memeory provided by MEM_FACTOR each device support multiple streams 1 large drive is generally better
+SWAP_DEVICES=1
+# SWAP_PRI = swap_priority for each drive 75 is a hig order preference and should be well above other swap drives
+SWAP_PRI=75
+# PAGE_CLUSTER default page cluster is 3 which caches fetches in batches of 8 and helps with HDD paging, with zram mem 0 forces single page fetches
+# This can help reduce latency and increase performance
+PAGE_CLUSTER=0
+# SWAPPINESS default swappiness is 60 but with increased performance of zram swap 80 garners overall performance gain without excessive load
+# Because zram uses compression load is created and even if minimal at intense load periods such as boot any extra load is unwanted
+# Unfortunately there is no dynamic load balancing of swappiness as with zram in general operation SWAPINESS=100 will garner performance benefit
+# If the overall load is reasonable at high load it will cause load to accumulate. 
+SWAPPINESS=80
+# If you check my repo there will also be a simple dynamic load branch based SWAPPINESS governor that will get of the hurdle of a static compromise on swappiness
+```
 
 ### It is working?
 You can now check the mount folder in ram with (You will see lines with zram if working)
