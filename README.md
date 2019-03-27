@@ -135,3 +135,8 @@ sudo systemctl disable dphys-swapfile
 ```
 chmod +x /usr/local/bin/zram-swap-config-uninstall.sh && sudo /usr/local/bin/zram-swap-config-uninstall.sh
 ```
+
+## Git Branches & Update
+Enter `git add --all` at the command line to add the files or changes to the repository
+Enter `git commit -m '<commit_message>'` at the command line to commit new files/changes to the local repository. For the <commit_message> , you can enter anything that describes the changes you are committing.
+Enter `git push`  at the command line to copy your files from your local repository to remote.
