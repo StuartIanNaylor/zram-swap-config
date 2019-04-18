@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/bash
 
 . /etc/zram-swap-config.conf
 
@@ -7,31 +7,35 @@ createZramSwaps () {
 	mem=$((( totalmem * MEM_FACTOR / 100 / SWAP_DEVICES ) * 1024 ))
 	drive_size=$((( mem * DRIVE_FACTOR ) /100 ))
 	# Check Zram Class created
-	if [ ! -d "/sys/class/zram-control" ]; then
-        	modprobe --verbose zram
-        	RAM_DEV='0'
-		echo ${COMP_ALG} > /sys/block/zram${RAM_DEV}/comp_algorithm
-		echo ${drive_size} > /sys/block/zram${RAM_DEV}/disksize
-		echo ${mem} > /sys/block/zram${RAM_DEV}/mem_limit
-		mkswap /dev/zram${RAM_DEV}
-		swapon -v -p ${SWAP_PRI} /dev/zram${RAM_DEV}
+	if modprobe --verbose --first-time zram 2>&1
+	then
+		DEV_NUM='0'
+		echo zram${DEV_NUM}" "$SWAP_DEVICES
+		echo ${COMP_ALG} > /sys/block/zram${DEV_NUM}/comp_algorithm
+		echo ${drive_size} > /sys/block/zram${DEV_NUM}/disksize
+		echo ${mem} > /sys/block/zram${DEV_NUM}/mem_limit
+		mkswap /dev/zram${DEV_NUM}
+		swapon -v -p ${SWAP_PRI} /dev/zram${DEV_NUM}
 	else
-        	RAM_DEV=$(cat /sys/class/zram-control/hot_add)
-		echo ${COMP_ALG} > /sys/block/zram${RAM_DEV}/comp_algorithm
-		echo ${drive_size} > /sys/block/zram${RAM_DEV}/disksize
-		echo ${mem} > /sys/block/zram${RAM_DEV}/mem_limit
-		mkswap /dev/zram${RAM_DEV}
-		swapon -v -p ${SWAP_PRI} /dev/zram${RAM_DEV}
+		DEV_NUM=$(cat /sys/class/zram-control/hot_add)
+		echo zram${DEV_NUM}" "$SWAP_DEVICES
+		echo ${COMP_ALG} > /sys/block/zram${DEV_NUM}/comp_algorithm
+		echo ${drive_size} > /sys/block/zram${DEV_NUM}/disksize
+		echo ${mem} > /sys/block/zram${DEV_NUM}/mem_limit
+		mkswap /dev/zram${DEV_NUM}
+		swapon -v -p ${SWAP_PRI} /dev/zram${DEV_NUM}
 	fi
 
 	if [ "$SWAP_DEVICES" -gt 1 ];then
-		for i in $(seq $((SWAP_DEVICES - 1))); do
-			RAM_DEV=$(cat /sys/class/zram-control/hot_add)
-			echo ${COMP_ALG} > /sys/block/zram${RAM_DEV}/comp_algorithm
-			echo ${drive_size} > /sys/block/zram${RAM_DEV}/disksize
-			echo ${mem} > /sys/block/zram${RAM_DEV}/mem_limit
-			mkswap /dev/zram${RAM_DEV}
-			swapon -v -p ${SWAP_PRI} /dev/zram${RAM_DEV}
+		for i in $(seq $((SWAP_DEVICES - 1)))
+		do
+			DEV_NUM=$(cat /sys/class/zram-control/hot_add)
+			echo zram${DEV_NUM}" "$SWAP_DEVICES
+			echo ${COMP_ALG} > /sys/block/zram${DEV_NUM}/comp_algorithm
+			echo ${drive_size} > /sys/block/zram${DEV_NUM}/disksize
+			echo ${mem} > /sys/block/zram${DEV_NUM}/mem_limit
+			mkswap /dev/zram${DEV_NUM}
+			swapon -v -p ${SWAP_PRI} /dev/zram${DEV_NUM}
 		done
 	fi
 	
@@ -43,15 +47,15 @@ createZramSwaps () {
 
 case "$1" in
 	start)
-		#sleep .1
 		createZramSwaps		
-		#nohup /usr/local/bin/zram-swap-config-slb > /dev/null 2>&1 &
 		;;
 	stop)
-		#kill $(cat /usr/local/bin/zram-swap-config-slb-pid)
 		if DEVICES=$(grep zram /proc/swaps | awk '{print $1}'); then
 			for i in $DEVICES; do
 				swapoff $i
+				DEV_NUM=$(echo "$i" | tr -dc '0-9')
+				echo "$DEV_NUM" > /sys/class/zram-control/hot_remove
+				echo "$DEV_NUM"
 			done
 		fi
 		;;
