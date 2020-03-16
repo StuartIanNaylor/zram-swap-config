@@ -47,9 +47,17 @@ createZramSwaps () {
 
 case "$1" in
 	start)
-		createZramSwaps		
+		sleep .1
+		createZramSwaps
+		if [ "$SWAPPINESS_GOVERNOR" -gt 0 ]; then
+			nohup /usr/local/bin/zram-swap-config-slb > /dev/null 2>&1 &
+		fi
 		;;
 	stop)
+		if [ "$SWAPPINESS_GOVERNOR" -gt 0 ]; then
+			kill $(cat /usr/local/bin/zram-swap-config-slb-pid)
+		fi
+		
 		if DEVICES=$(grep zram /proc/swaps | awk '{print $1}'); then
 			for i in $DEVICES; do
 				swapoff $i
