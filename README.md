@@ -23,7 +23,7 @@ _____
     cd zram-swap-config
     chmod +x install.sh && sudo ./install.sh
     cd ..
-    rm -r zram-swap-config
+    rm -rf zram-swap-config
 
 ## Upgrade
 
@@ -133,7 +133,7 @@ sudo systemctl disable dphys-swapfile
 ## Uninstall 
 
 ```
-chmod +x /usr/local/bin/zram-swap-config-uninstall.sh && sudo /usr/local/bin/zram-swap-config-uninstall.sh
+sudo chmod +x /usr/local/bin/zram-swap-config-uninstall.sh && sudo /usr/local/bin/zram-swap-config-uninstall.sh
 ```
 
 ## Git Branches & Update
